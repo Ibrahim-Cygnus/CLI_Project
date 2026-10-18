@@ -1,8 +1,8 @@
 #Define the responses as functions
-def greet():
+def greet(args):
      print("Hello")
 
-def exit_program():
+def exit_program(args):
      print("Goodbye")
      return True
 
@@ -14,17 +14,22 @@ commands_n_responses = {
 #the main infinite loop
 while True:
     #Input from user, cleaned and formatted
-    command = input("Enter command: ").strip().lower()
-    #If command is empty, go again.
-    if not command:
+    user_input = input("Enter command: ").strip().lower()
+    #Divide the input into pieces
+    parts = user_input.split()
+    #Prevent empty commands
+    if not parts:
         continue
+    #The first input piece is the function, and the rest are arguments
+    command = parts[0]
+    args = parts[1:]
+
     #Check if the entered command is listed
     if command in commands_n_responses:
-        #Respond to command
-        should_exit = commands_n_responses[command]()
+        #Call the required functions and pass the arguments
+        should_exit = commands_n_responses[command](args)
         if should_exit:
             break
-
     else:
         print("Invalid command. Please enter a valid command")
         continue
