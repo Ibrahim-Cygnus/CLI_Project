@@ -13,7 +13,6 @@ def load_file(file_name):
         return []
     return data_output
 
-#Filtering mechanism
 def filter_data(parameters, data):
     filter_output = []
     field = parameters[0]
@@ -44,3 +43,7 @@ def filter_data(parameters, data):
     else:
         print(f"Invalid input, the operator {operator} is not valid.")
     return filter_output
+
+def average_field(field, data):
+    result = sum(row[field] for row in data) / len(data)
+    return result

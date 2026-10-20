@@ -31,7 +31,7 @@ def filter_function(args):
         print("No data loaded, please load data first")
         return None
     elif len(args) != 3:
-        print("Invalid input, please enter valid command")
+        print("Invalid arguments for the command filter")
         return None
     filtered_data = data_handler.filter_data(args, sample_data)
     if not filtered_data:
@@ -39,13 +39,30 @@ def filter_function(args):
         return None
     print(filtered_data)
 
+def average(args):
+    if len(args) != 1:
+        print("Invalid arguments for the command average")
+        return None
+    if not sample_data:
+        print("No data loaded, please load data first")
+        return None
+    try:
+        int(sample_data[0][args[0]])
+        average_data = data_handler.average_field(args[0], sample_data)
+        print(average_data)
+    except ValueError:
+        print(f'You can\'t average {args[0]}')
+    except KeyError:
+        print(f'No such field as {args[0]}')
+
 #The list of valid commands and their responses
 commands_n_responses = {
     "greet": greet,
     "exit" : exit_program,
     "load" : load,
     "show" : show,
-    "filter" : filter_function
+    "filter" : filter_function,
+    "average" : average
 }
 #The main infinite loop
 while True:
