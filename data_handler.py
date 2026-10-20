@@ -47,3 +47,7 @@ def filter_data(parameters, data):
 def average_field(field, data):
     result = sum(row[field] for row in data) / len(data)
     return result
+
+def maximum(field, data):
+    result = sorted(data, key= lambda y: int(y[field]), reverse= True)
+    return result[0][field]

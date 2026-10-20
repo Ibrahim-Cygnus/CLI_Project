@@ -55,6 +55,22 @@ def average(args):
     except KeyError:
         print(f'No such field as {args[0]}')
 
+def max(args):
+    if not sample_data:
+        print("No data loaded, please load data first")
+        return None
+    if len(args) != 1:
+        print("Invalid arguments for the command max")
+        return None
+    try:
+        int(sample_data[0][args[0]])
+        maximum = data_handler.maximum(args[0], sample_data)
+        print(maximum)
+    except ValueError:
+        print(f'This command does not apply to {args[0]}')
+    except KeyError:
+        print(f'No such field as {args[0]}')
+
 #The list of valid commands and their responses
 commands_n_responses = {
     "greet": greet,
@@ -62,7 +78,8 @@ commands_n_responses = {
     "load" : load,
     "show" : show,
     "filter" : filter_function,
-    "average" : average
+    "average" : average,
+    "max" : max
 }
 #The main infinite loop
 while True:
