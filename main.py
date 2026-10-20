@@ -71,6 +71,22 @@ def max(args):
     except KeyError:
         print(f'No such field as {args[0]}')
 
+def find(args):
+    if not sample_data:
+        print("No data loaded, please load data first")
+        return None
+    if len(args) != 2:
+        print("Invalid arguments for the command max")
+        return None
+    try:
+        search = data_handler.finder(args[0], args[1], sample_data)
+        if not search:
+            print("No matches")
+            return None
+        print(search)
+    except KeyError:
+        print(f'No such field as {args[0]}')
+        
 #The list of valid commands and their responses
 commands_n_responses = {
     "greet": greet,
@@ -79,7 +95,8 @@ commands_n_responses = {
     "show" : show,
     "filter" : filter_function,
     "average" : average,
-    "max" : max
+    "max" : max,
+    "find" : find
 }
 #The main infinite loop
 while True:

@@ -51,3 +51,10 @@ def average_field(field, data):
 def maximum(field, data):
     result = sorted(data, key= lambda y: int(y[field]), reverse= True)
     return result[0][field]
+
+def finder(field, value, data):
+    all_matching_items = []
+    for item in data:
+        if str(item[field]).lower() == value:
+            all_matching_items.append(item)
+    return all_matching_items
