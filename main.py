@@ -8,8 +8,8 @@ state = AvailabilityOfData()
 def help(args, state):
     print("Available commands are:")
     for cmd in commands_n_responses:
-        print(f'{cmd}. Example use:- {commands_n_responses[cmd][1]}')
-        
+        print(f'{cmd}. Example use:- {commands_n_responses[cmd][2]}')
+
 def greet(args, state):
      print("Hello")
 
@@ -35,9 +35,6 @@ def filter_function(args, state):
     if not state.data:
         print("No data loaded, please load data first")
         return None
-    elif len(args) != 3:
-        print("Invalid arguments for the command filter")
-        return None
     filtered_data = data_handler.filter_data(args, state.data)
     if not filtered_data:
         print("No matches")
@@ -45,9 +42,6 @@ def filter_function(args, state):
     print(filtered_data)
 
 def average(args, state):
-    if len(args) != 1:
-        print("Invalid arguments for the command average")
-        return None
     if not state.data:
         print("No data loaded, please load data first")
         return None
@@ -64,9 +58,6 @@ def max(args, state):
     if not state.data:
         print("No data loaded, please load data first")
         return None
-    if len(args) != 1:
-        print("Invalid arguments for the command max")
-        return None
     try:
         int(state.data[0][args[0]])
         maximum = data_handler.maximum(args[0], state.data)
@@ -80,9 +71,6 @@ def find(args, state):
     if not state.data:
         print("No data loaded, please load data first")
         return None
-    if len(args) != 2:
-        print("Invalid arguments for the command find")
-        return None
     try:
         search = data_handler.finder(args[0], args[1], state.data)
         if not search:
@@ -94,15 +82,15 @@ def find(args, state):
         
 #The list of valid commands and their responses
 commands_n_responses = {
-    "greet": [greet, "greet"],
-    "exit" : [exit_program, "exit"],
-    "load" : [load, "load <file_name.with_extension>"],
-    "show" : [show, "show"],
-    "filter" : [filter_function, "filter <field> <operator> <criterion>. For example: filter age < 20"],
-    "average" : [average, "average <field>. For example: average score"],
-    "max" : [max, "max <field>. For example: max score"],
-    "find" : [find, "find <field> <value>. For example: Find name sara"],
-    "help" : [help, "help"]
+    "greet": [greet, 0, "greet"],
+    "exit" : [exit_program, 0, "exit"],
+    "load" : [load, 1, "load <file_name.with_extension>"],
+    "show" : [show, 0, "show"],
+    "filter" : [filter_function, 3, "filter <field> <operator> <criterion>. For example: filter age < 20"],
+    "average" : [average, 1, "average <field>. For example: average score"],
+    "max" : [max, 1, "max <field>. For example: max score"],
+    "find" : [find, 2, "find <field> <value>. For example: Find name sara"],
+    "help" : [help, 0, "help"]
 }
 #The main infinite loop
 while True:
@@ -119,6 +107,9 @@ while True:
 
     #Check if the entered command is listed
     if command in commands_n_responses:
+        if len(args) != commands_n_responses[command][1]:
+            print(f"invalid arguments for the command {command}")
+            continue
         #Call the required functions and pass the arguments
         should_exit = commands_n_responses[command][0](args, state)
         if should_exit:
